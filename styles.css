@@ -1,46 +1,67 @@
-/* General body styling */
+/* Body Background with Blue NCC Theme */
 body {
-    background-color: #003f5c; /* Dark blue from the NCC flag */
+    background-color: #003f5c; /* NCC Dark Blue */
     color: white;
     font-family: 'Arial', sans-serif;
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
-/* Container and card styling */
 .container {
-    max-width: 800px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    padding: 20px;
+    max-width: 900px;
+}
+
+h1 {
+    color: #d9534f; /* Red NCC Theme */
+    font-weight: bold;
 }
 
 .card {
-    border-radius: 10px;
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 12px;
 }
 
-/* Button styling */
+.card-body {
+    padding: 30px;
+}
+
 .btn-primary {
-    background-color: #d9534f; /* Red from NCC flag */
+    background-color: #d9534f; /* Red NCC Theme */
     border-color: #d9534f;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
     background-color: #c9302c;
-    border-color: #ac2925;
 }
 
-/* Cadet information display */
+/* Loading Spinner */
+#loader {
+    margin-top: 20px;
+}
+
+/* Cadet Information Box */
 #cadetInfo {
-    padding: 20px;
     background-color: #28a745; /* Green from NCC flag */
     border-radius: 8px;
+    padding: 20px;
     color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Hidden by default */
+    animation: fadeIn 0.5s ease;
 }
 
 #cadetInfo h2 {
     border-bottom: 2px solid white;
     padding-bottom: 10px;
     margin-bottom: 20px;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
