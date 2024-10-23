@@ -1,5 +1,5 @@
 async function getCadetInfo() {
-    const cadetId = document.getElementById('cadetId').value.trim();
+    const cadetId = $('#cadetId').val().trim();
 
     if (!cadetId) {
         alert('Please enter a Cadet ID');
@@ -18,16 +18,18 @@ async function getCadetInfo() {
     } catch (error) {
         console.error('Error fetching cadet information:', error);
         alert('Error fetching cadet information: ' + error.message);
+        $('#cadetInfo').hide();  // Hide the info section if there is an error
     }
 }
 
 function displayCadetInfo(cadetData) {
-    const cadetInfoDiv = document.getElementById('cadetInfo');
-    cadetInfoDiv.innerHTML = `
+    const cadetInfoDiv = $('#cadetInfo');
+    cadetInfoDiv.html(`
         <h2>Cadet Information</h2>
         <p><strong>Name:</strong> ${cadetData.name}</p>
         <p><strong>Cadet ID:</strong> ${cadetData.cadetId}</p>
         <p><strong>Rank:</strong> ${cadetData.rank}</p>
         <p><strong>Unit:</strong> ${cadetData.unit}</p>
-    `;
+    `);
+    cadetInfoDiv.show();  // Show the info section after successful retrieval
 }
