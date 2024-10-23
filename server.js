@@ -47,6 +47,34 @@ app.get('/cadet/:id', async (req, res) => {
     }
 });
 
+// Endpoint to register a new cadet
+app.post('/register', async (req, res) => {
+    const { cadetId, name, rank, unit } = req.body;
+
+    // Validate the request body
+    if (!cadetId || !name || !rank || !unit) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    try {
+        // Check if cadetId already exists
+        const existingCadet = await Cadet.findOne({ cadetId: new RegExp(`^${cadetId}$`, 'i') });
+        if (existingCadet) {
+            return res.status(409).json({ message: 'Cadet ID already exists' });
+        }
+
+        // Create a new cadet
+        const newCadet = new Cadet({ cadetId, name, rank, unit });
+        await newCadet.save();
+
+        console.log('New cadet registered:', newCadet);
+        res.status(201).json({ message: 'Cadet registered successfully', cadet: newCadet });
+    } catch (error) {
+        console.error('Error occurred while registering cadet:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
