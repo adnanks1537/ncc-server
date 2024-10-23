@@ -1,31 +1,33 @@
 async function getCadetInfo() {
-    const cadetId = document.getElementById('cadetId').value;
-    if (cadetId === '') {
+    const cadetId = document.getElementById('cadetId').value.trim();
+
+    if (!cadetId) {
         alert('Please enter a Cadet ID');
         return;
     }
 
     try {
-        // Simulate an API call (replace with actual backend URL)
         const response = await fetch(`https://ncc-server.onrender.com/cadet/${cadetId}`);
+
         if (!response.ok) {
-            throw new Error('Cadet not found');
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
 
         const cadetData = await response.json();
         displayCadetInfo(cadetData);
     } catch (error) {
-        alert(error.message);
+        console.error('Error fetching cadet information:', error);
+        alert('Error fetching cadet information: ' + error.message);
     }
 }
 
 function displayCadetInfo(cadetData) {
     const cadetInfoDiv = document.getElementById('cadetInfo');
-    cadetInfoDiv.style.display = 'block';
     cadetInfoDiv.innerHTML = `
-        <h3>Cadet Name: ${cadetData.name}</h3>
-        <p>Cadet ID: ${cadetData.cadetId}</p>
-        <p>Rank: ${cadetData.rank}</p>
-        <p>Unit: ${cadetData.unit}</p>
+        <h2>Cadet Information</h2>
+        <p><strong>Name:</strong> ${cadetData.name}</p>
+        <p><strong>Cadet ID:</strong> ${cadetData.cadetId}</p>
+        <p><strong>Rank:</strong> ${cadetData.rank}</p>
+        <p><strong>Unit:</strong> ${cadetData.unit}</p>
     `;
 }
