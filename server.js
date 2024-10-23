@@ -4,14 +4,17 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// Enable CORS for requests from GitHub Pages
+app.use(cors({
+    origin: 'https://adnanks1537.github.io'  // Replace with your GitHub Pages URL
+}));
 
 const port = process.env.PORT || 5000;
 
-// Replace <db_password> with the actual password and encode any special characters if needed.
+// MongoDB connection string
 const mongoUri = 'mongodb+srv://adnankstheredteamlabs:Adnan%4066202@cluster0.qrppz7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-// Connect to MongoDB Atlas
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,7 +22,7 @@ mongoose.connect(mongoUri, {
     .then(() => console.log('Connected to MongoDB Atlas successfully!'))
     .catch((error) => console.log('Error connecting to MongoDB Atlas:', error));
 
-// Create a basic Cadet schema and model for MongoDB
+// Cadet Schema and Model
 const cadetSchema = new mongoose.Schema({
     cadetId: String,
     name: String,
@@ -29,22 +32,21 @@ const cadetSchema = new mongoose.Schema({
 
 const Cadet = mongoose.model('Cadet', cadetSchema);
 
-// Example API route to get cadet info by cadet ID
-app.get('/cadet/:cadetId', async (req, res) => {
-    const cadetId = req.params.cadetId;
-
+// Route to fetch cadet info by ID
+app.get('/cadet/:id', async (req, res) => {
     try {
-        const cadet = await Cadet.findOne({ cadetId: cadetId });
+        // Perform case-insensitive search for cadet ID
+        const cadet = await Cadet.findOne({ cadetId: new RegExp(`^${req.params.id}$`, 'i') });
         if (!cadet) {
-            return res.status(404).json({ error: 'Cadet not found' });
+            return res.status(404).json({ message: 'Cadet not found' });
         }
-
         res.json(cadet);
     } catch (error) {
-        res.status(500).json({ error: 'Error fetching cadet info' });
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
+// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
