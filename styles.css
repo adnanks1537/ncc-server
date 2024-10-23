@@ -1,143 +1,40 @@
-/* Global Styles */
-* {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
 }
 
-body {
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Header Styles */
-header {
-    background: linear-gradient(90deg, #0077b6, #52b788, #d90429); /* NCC Flag Colors */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
     padding: 20px;
-    text-align: center;
-    color: #fff;
-}
-
-header h1 {
-    font-size: 2.5em;
-    font-weight: bold;
-}
-
-/* Intro Section */
-.intro {
-    padding: 30px;
-    text-align: center;
-    background-color: #fff;
-}
-
-.intro h2 {
-    color: #0077b6; /* Navy Blue for Title */
-    margin-bottom: 10px;
-}
-
-.intro p {
-    font-size: 1.2em;
-    color: #555;
-}
-
-/* Search Section */
-.search-section {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-label {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-
-input[type="text"] {
-    width: 100%;
+input {
     padding: 10px;
+    width: 80%;
     margin-bottom: 20px;
-    border: 2px solid #0077b6;
-    border-radius: 5px;
-    font-size: 1em;
-    max-width: 400px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #52b788; /* Green for Button */
+    padding: 10px 15px;
+    background-color: #007BFF;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.1em;
 }
 
 button:hover {
-    background-color: #40916c;
+    background-color: #0056b3;
 }
 
-/* Cadet Info Display */
-.cadet-info {
+#cadetInfo {
     margin-top: 20px;
-    padding: 20px;
-    background-color: #d9ed92; /* Light Green for Info Section */
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Initially hidden */
-    max-width: 600px;
-    margin: 20px auto;
     text-align: left;
-}
-
-.cadet-info h3 {
-    margin-bottom: 10px;
-}
-
-.cadet-info p {
-    font-size: 1.1em;
-    margin: 5px 0;
-}
-
-/* Footer Styles */
-footer {
-    background-color: #0077b6;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2em;
-    }
-
-    .intro h2 {
-        font-size: 1.8em;
-    }
-
-    .input-group {
-        width: 90%;
-    }
-
-    input[type="text"] {
-        width: 100%;
-    }
-
-    .cadet-info {
-        width: 90%;
-    }
 }
