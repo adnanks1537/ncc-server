@@ -1,40 +1,50 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.use(express.json());
+app.use(cors());
 
-// MongoDB Atlas connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB Atlas'))
-    .catch(err => console.log('Error connecting to MongoDB:', err));
+const port = process.env.PORT || 5000;
 
-// Cadet schema
+// Replace <db_password> with the actual password and encode any special characters if needed.
+const mongoUri = 'mongodb+srv://adnankstheredteamlabs:Adnan%4066202@cluster0.qrppz7h.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+// Connect to MongoDB Atlas
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => console.log('Connected to MongoDB Atlas successfully!'))
+    .catch((error) => console.log('Error connecting to MongoDB Atlas:', error));
+
+// Create a basic Cadet schema and model for MongoDB
 const cadetSchema = new mongoose.Schema({
     cadetId: String,
     name: String,
     rank: String,
-    unit: String
+    unit: String,
 });
 
 const Cadet = mongoose.model('Cadet', cadetSchema);
 
-// API to get cadet information by ID
-app.get('/cadet/:id', async (req, res) => {
+// Example API route to get cadet info by cadet ID
+app.get('/cadet/:cadetId', async (req, res) => {
+    const cadetId = req.params.cadetId;
+
     try {
-        const cadet = await Cadet.findOne({ cadetId: req.params.id });
+        const cadet = await Cadet.findOne({ cadetId: cadetId });
         if (!cadet) {
-            return res.status(404).send({ error: 'Cadet not found' });
+            return res.status(404).json({ error: 'Cadet not found' });
         }
-        res.send(cadet);
+
+        res.json(cadet);
     } catch (error) {
-        res.status(500).send({ error: 'Error fetching cadet information' });
+        res.status(500).json({ error: 'Error fetching cadet info' });
     }
 });
 
-// Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
