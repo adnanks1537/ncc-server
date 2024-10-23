@@ -7,7 +7,7 @@ async function getCadetInfo() {
 
     try {
         // Simulate an API call (replace with actual backend URL)
-        const response = await fetch(`https://your-backend-api-url.com/cadet/${cadetId}`);
+        const response = await fetch(`https://ncc-server.onrender.com/cadet/${cadetId}`);
         if (!response.ok) {
             throw new Error('Cadet not found');
         }
