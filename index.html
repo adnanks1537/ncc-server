@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCC Cadet Information System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>NCC Cadet Information</h1>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Welcome to the NCC Cadet Information Portal</h2>
+            <p>Enter the Cadet ID to view the details of an NCC Cadet.</p>
+        </section>
+
+        <section class="search-section">
+            <div class="input-group">
+                <label for="cadetId">Cadet ID:</label>
+                <input type="text" id="cadetId" placeholder="Enter Cadet ID" required>
+                <button onclick="getCadetInfo()">Search</button>
+            </div>
+
+            <div id="cadetInfo" class="cadet-info"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 NCC India | All Rights Reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
