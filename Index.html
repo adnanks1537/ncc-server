@@ -3,37 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCC Cadet Information System</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>NCC Cadet Profile Lookup</title>
+
+    <!-- Google Font for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Styling -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #E63946, #457B9D, #FFD700);
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .input-group input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #457B9D;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1D3557;
+        }
+        .profile-card {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            display: none;
+            text-align: left;
+        }
+        .profile-card h3 {
+            color: #333;
+        }
+        .profile-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <h1>NCC Cadet Information</h1>
-        </nav>
-    </header>
 
-    <main>
-        <section class="intro">
-            <h2>Welcome to the NCC Cadet Information Portal</h2>
-            <p>Enter the Cadet ID to view the details of an NCC Cadet.</p>
-        </section>
-
-        <section class="search-section">
+    <!-- Main Container -->
+    <div class="container">
+        <div class="card">
+            <h2>NCC Cadet Profile Lookup</h2>
+            
+            <!-- Input Field for Cadet ID -->
             <div class="input-group">
-                <label for="cadetId">Cadet ID:</label>
-                <input type="text" id="cadetId" placeholder="Enter Cadet ID" required>
-                <button onclick="getCadetInfo()">Search</button>
+                <label for="cadetID">Enter Cadet ID</label>
+                <input type="text" id="cadetID" placeholder="Cadet ID">
             </div>
 
-            <div id="cadetInfo" class="cadet-info"></div>
-        </section>
-    </main>
+            <!-- Submit Button -->
+            <button class="btn" onclick="fetchCadetProfile()">Submit</button>
 
-    <footer>
-        <p>&copy; 2024 NCC India | All Rights Reserved</p>
-    </footer>
+            <!-- Profile Card - Will show after search -->
+            <div class="profile-card" id="profileCard">
+                <h3>Cadet Profile</h3>
+                <p><strong>Name:</strong> <span id="cadetName"></span></p>
+                <p><strong>Rank:</strong> <span id="cadetRank"></span></p>
+                <p><strong>Unit:</strong> <span id="cadetUnit"></span></p>
+                <p><strong>Division:</strong> <span id="cadetDivision"></span></p>
+            </div>
+        </div>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- JavaScript Logic -->
+    <script>
+        async function fetchCadetProfile() {
+            // Get the cadet ID from input
+            const cadetID = document.getElementById('cadetID').value;
+
+            if (!cadetID) {
+                alert('Please enter a valid Cadet ID');
+                return;
+            }
+
+            // Simulate fetching data from the server (You will replace this with actual API call)
+            try {
+                // Simulated response from backend
+                const response = await fetch(`https://ncc-server.onrender.com/cadet/${cadetID}`);
+                if (!response.ok) throw new Error('Cadet not found');
+
+                const data = await response.json();
+
+                // Update the profile card with the cadet information
+                document.getElementById('cadetName').innerText = data.name;
+                document.getElementById('cadetRank').innerText = data.rank;
+                document.getElementById('cadetUnit').innerText = data.unit;
+                document.getElementById('cadetDivision').innerText = data.division;
+
+                // Display the profile card
+                document.getElementById('profileCard').style.display = 'block';
+
+            } catch (error) {
+                alert('Error fetching cadet profile: ' + error.message);
+            }
+        }
+    </script>
+
 </body>
 </html>
