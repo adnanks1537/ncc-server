@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Register NCC Cadet</title>
+
+    <!-- Google Font for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Styling -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #E63946, #457B9D, #FFD700);
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .input-group input, .input-group select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #457B9D;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #1D3557;
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="card">
+            <h2>Register New NCC Cadet</h2>
+
+            <!-- Input Form -->
+            <form id="cadetRegistrationForm">
+                <div class="input-group">
+                    <label for="cadetId">Cadet ID</label>
+                    <input type="text" id="cadetId" name="cadetId" placeholder="Enter Cadet ID" required>
+                </div>
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter Cadet Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="rank">Rank</label>
+                    <select id="rank" name="rank" required>
+                        <option value="Cadet">Cadet</option>
+                        <option value="Lance Corporal">Lance Corporal</option>
+                        <option value="Corporal">Corporal</option>
+                        <option value="Sergeant">Sergeant</option>
+                        <option value="Under Officer">Under Officer</option>
+                        <option value="Lieutenant">Lieutenant</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="unit">Unit</label>
+                    <input type="text" id="unit" name="unit" placeholder="Enter Unit Name" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn">Register Cadet</button>
+            </form>
+
+            <!-- Success/Failure Message -->
+            <p id="message" style="color: green; margin-top: 15px;"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Add event listener to form
+        document.getElementById('cadetRegistrationForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+            
+            // Get form data
+            const cadetData = {
+                cadetId: document.getElementById('cadetId').value,
+                name: document.getElementById('name').value,
+                rank: document.getElementById('rank').value,
+                unit: document.getElementById('unit').value
+            };
+
+            // Send POST request to server
+            try {
+                const response = await fetch('https://ncc-server.onrender.comm/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cadetData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to register cadet');
+                }
+
+                const result = await response.json();
+
+                // Display success message
+                document.getElementById('message').innerText = 'Cadet registered successfully!';
+                document.getElementById('message').style.color = 'green';
+
+                // Clear form fields
+                document.getElementById('cadetRegistrationForm').reset();
+            } catch (error) {
+                // Display error message
+                document.getElementById('message').innerText = error.message;
+                document.getElementById('message').style.color = 'red';
+            }
+        });
+    </script>
+
+</body>
+</html>
