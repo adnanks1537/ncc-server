@@ -2,9 +2,13 @@ async function getCadetInfo() {
     const cadetId = $('#cadetId').val().trim();
 
     if (!cadetId) {
-        alert('Please enter a Cadet ID');
+        alert('Please enter a valid Cadet ID');
         return;
     }
+
+    // Show loader
+    $('#loader').show();
+    $('#cadetInfo').hide();
 
     try {
         const response = await fetch(`https://ncc-server.onrender.com/cadet/${cadetId}`);
@@ -18,7 +22,9 @@ async function getCadetInfo() {
     } catch (error) {
         console.error('Error fetching cadet information:', error);
         alert('Error fetching cadet information: ' + error.message);
-        $('#cadetInfo').hide();  // Hide the info section if there is an error
+    } finally {
+        // Hide loader
+        $('#loader').hide();
     }
 }
 
@@ -31,5 +37,5 @@ function displayCadetInfo(cadetData) {
         <p><strong>Rank:</strong> ${cadetData.rank}</p>
         <p><strong>Unit:</strong> ${cadetData.unit}</p>
     `);
-    cadetInfoDiv.show();  // Show the info section after successful retrieval
+    cadetInfoDiv.fadeIn(400);  // Smooth transition when displaying the data
 }
